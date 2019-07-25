@@ -67,18 +67,16 @@ class TimerCountdown extends React.Component {
         this.tick();
     }
     componentDidUpdate(newProps) {
-        if (this.state.timeoutId !== undefined) {
+        if (!this.state.previousMilliseconds && this.state.millisecondsRemaining > 0) {
+            this.tick();
+        }
+         if (this.state.timeoutId !== undefined) {
             clearTimeout(this.state.timeoutId);
         }
         this.setState({
             previousMilliseconds: undefined,
             millisecondsRemaining: newProps.initialMilliseconds
         });
-    }
-    componentDidUpdate() {
-        if (!this.state.previousMilliseconds && this.state.millisecondsRemaining > 0) {
-            this.tick();
-        }
     }
     componentWillUnmount() {
         clearTimeout(this.state.timeoutId);
